@@ -5,7 +5,8 @@
 /node_modules
 **/.history
 **/backup
-# **/.env
+**/.env
+.env
 **/.eslintcache 
 0-save
 
