@@ -1,4 +1,3 @@
-const axios = require('axios')
 const dotenv = require('dotenv')
 dotenv.config()
 
@@ -6,7 +5,8 @@ const TelegramBot = require('node-telegram-bot-api')
 const token = process.env.TELEGRAM_BOT_TOKEN
 const bot = new TelegramBot(token, { polling: true })
 const chatIdAdmin = process.env.CHAT_ID_ADMIN
-const openaiApiKey = process.env.OPENAI_API_KEY
+
+const giveMeAnswer = require('./utils/giveMeAnswer.js')
 
 // const textMessage = `<b>12345</b>`
 // bot.sendMessage(chatIdAdmin, textMessage, {
@@ -48,53 +48,21 @@ bot.on('callback_query', (query) => {
 })
 
 // sending a list of words and adding them to the dictionary
-bot.on('message', (msg) => {
+bot.on('message', async (msg) => {
     const chatId = msg.chat.id
 
     console.log('3333 :>> ')
     console.log('chatId :>> ', chatId)
     console.log('msg :>> ', msg)
-    let answer = giveMeAnswer(msg.text)
+    let answer = ''
+    await giveMeAnswer(msg.text)
+        .then((res) => {
+            answer = res
+            return res
+        })
+        .catch((err) => {
+            console.log('err :>> _giveMeAnswer :  ', err)
+        })
 
-    // bot.sendMessage(chatIdAdmin, answer)
     bot.sendMessage(chatId, answer)
-
-    // if (msg.text == '/start') {
-    //     bot.sendMessage(chatIdAdmin, `Server-Bot successfully started  `)
-    // } else if (!dictionary.includes(msg.text) && msg.text !== '/start') {
-    //     dictionary = dictionary.concat(msg.text.split(/\r?\n/))
-    //     bot.sendMessage(
-    //         chatIdAdmin,
-    //         `Successfully added "${msg.text}" to the dictionary.`,
-    //     )
-    // }
 })
-
-const giveMeAnswer = async (textRequest) => {
-    await axios({
-        method: 'post',
-        url: 'https://api.openai.com/v1/chat/completions',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${openaiApiKey}`,
-        },
-        data: {
-            model: 'gpt-3.5-turbo',
-            messages: [{ role: 'user', content: textRequest }],
-            temperature: 0.7,
-        },
-    })
-        .then((response) => {
-            // console.log('response.data==', response.data)
-            // console.log('choices==', response.data.choices[0])
-            // console.log('message==', response.data.choices[0].message)
-            console.log('content==', response.data.choices[0].message.content)
-
-            return response.data.choices[0].message.content
-        })
-        .catch((error) => {
-            console.log('error', error)
-
-            return ''
-        })
-}
