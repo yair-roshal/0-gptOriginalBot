@@ -1,7 +1,13 @@
 const openaiApiKey = process.env.OPENAI_API_KEY
 const axios = require('axios')
 
-module.exports = giveMeAnswer = async (textRequest) => {
+module.exports = giveMeAnswer = async (textRequest, previousMessages) => {
+    let textContest = `${previousMessages.join('\n')} \n\n ${textRequest}`
+
+    previousMessages.push(textRequest)
+
+    console.log('textContest :>> ', textContest)
+
     return axios({
         method: 'post',
         url: 'https://api.openai.com/v1/chat/completions',
@@ -11,19 +17,12 @@ module.exports = giveMeAnswer = async (textRequest) => {
         },
         data: {
             model: 'gpt-3.5-turbo',
-            messages: [{ role: 'user', content: textRequest }],
+            messages: [{ role: 'user', content: textContest }],
+
             temperature: 0.7,
         },
     })
         .then((response) => {
-            // console.log('response.data==', response.data)
-            // console.log('choices==', response.data.choices[0])
-            // console.log('message==', response.data.choices[0].message)
-            console.log(
-                'content_giveMeAnswer : ',
-                response.data.choices[0].message.content,
-            )
-
             return response.data.choices[0].message.content
         })
         .catch((error) => {
