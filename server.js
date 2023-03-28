@@ -55,14 +55,12 @@ bot.on('message', async (msg) => {
     console.log('chatId :>> ', chatId)
     console.log('msg :>> ', msg)
     let answer = ''
-    await giveMeAnswer(msg.text)
-        .then((res) => {
-            answer = res
-            return res
-        })
+    answer = await giveMeAnswer(msg.text)
+        .then((res) => res)
+
         .catch((err) => {
             console.log('err :>> _giveMeAnswer :  ', err)
         })
-
+    console.log('answer :>> ', answer)
     bot.sendMessage(chatId, answer)
 })
