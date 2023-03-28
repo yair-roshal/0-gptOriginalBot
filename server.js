@@ -3,6 +3,7 @@ dotenv.config()
 
 const TelegramBot = require('node-telegram-bot-api')
 const token = process.env.TELEGRAM_BOT_TOKEN
+console.log('token :>> ', token)
 const bot = new TelegramBot(token, { polling: true })
 const chatIdAdmin = process.env.CHAT_ID_ADMIN
 
@@ -13,18 +14,18 @@ const giveMeAnswer = require('./utils/giveMeAnswer.js')
 //     parse_mode: 'HTML',
 //     disable_web_page_preview: false,
 // })
+function openStartMenu(chatId, startMenu) {
+    bot.sendMessage(chatId, 'The keyboard is open', startMenu)
+}
 
 console.log('--------------- :>> ')
 bot.onText(/\/start/, (msg, match) => {
     const chatId = msg.chat.id
     console.log('111111 :>> ')
     console.log('chatId :>> ', chatId)
-    bot.sendMessage(chatId, 'Hello, ' + msg.chat.first_name + '!', mainMenu)
-    openStartMenu(chatId)
+    // bot.sendMessage(chatId, 'Hello, ' + msg.chat.first_name + '!', mainMenu)
+    openStartMenu(chatId, startMenu)
 })
-function openStartMenu(chatId) {
-    bot.sendMessage(chatId, 'The keyboard is open', startMenu)
-}
 
 bot.onText(/\/keyboard/, (msg) => {
     const chatId = msg.chat.id
