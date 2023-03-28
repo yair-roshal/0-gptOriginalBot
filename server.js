@@ -29,7 +29,8 @@ async function start() {
     console.log('answer :>> ', answer)
     bot.sendMessage(chatIdAdmin, answer, mainMenu)
 }
-start()
+
+// start()
 //==============================================
 
 bot.on('message', async (msg) => {
@@ -47,7 +48,7 @@ bot.on('message', async (msg) => {
         })
 
     console.log('answer :>> ', answer)
-    // bot.sendMessage(chatId, answer)
+    bot.sendMessage(chatId, answer)
 })
 //==============================================
 
