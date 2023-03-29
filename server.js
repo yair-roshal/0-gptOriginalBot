@@ -4,11 +4,18 @@ const token = process.env.TELEGRAM_BOT_TOKEN
 const bot = new TelegramBot(token, { polling: true })
 const chatIdAdmin = process.env.CHAT_ID_ADMIN
 const giveMeAnswer = require('./utils/giveMeAnswer.js')
+const bot_on_callback_query = require('./utils/bot_on_callback_query.js')
 const {
     startAlwaysMenu_2buttons,
     callToAdminMenu,
+    inline_keyboard,
 } = require('./constants/constants')
 
+const arrayBlockListSendingGPT = [
+    '/add_feature',
+    '/clean_context',
+    'Clean context',
+]
 //==============================================
 
 console.log('__________________________________:>> ')
@@ -53,34 +60,21 @@ bot.onText(/\/clean_context/, (msg) => {
     bot.sendMessage(
         msg.chat.id,
         'Context was cleaned',
-        // startMenu,
-        // mainMenu,
+
         startAlwaysMenu_2buttons,
+        // inline_keyboard,
     )
     // bot.sendMessage(msg.chat.id, 'Context was cleaned')
 })
 
 //==============================================
-//processing selections on the internal bot keyboard
-bot.on('callback_query', (query) => {
-    console.log('query11111 :>> ', query)
-    console.log('55555_ :>>callback_query ')
-
-    if (query.data === 'clean_context') {
-        bot.sendMessage(
-            chatIdAdmin,
-            'All was cleaned',
-            startAlwaysMenu_2buttons,
-        )
-    }
-})
 
 //==============================================
 //giveMeAnswer
 
 bot.on('message', async (msg) => {
     console.log('msg.text :>> ', msg.text)
-    if (['/add_feature', '/clean_context'].includes(msg.text) !== true) {
+    if (arrayBlockListSendingGPT.includes(msg.text) !== true) {
         const chatId = msg.chat.id
         let prompt = msg.text
         let answer = ''
@@ -95,3 +89,5 @@ bot.on('message', async (msg) => {
         bot.sendMessage(chatId, answer)
     }
 })
+
+module.exports = bot
