@@ -18,7 +18,8 @@ module.exports = giveMeAnswer = async (textRequest, previousMessages) => {
             'Authorization': `Bearer ${openaiApiKey}`,
         },
         data: {
-            model: 'davinci',
+            model: 'gpt-3.5-turbo',
+            // model: 'davinci',
             messages: [{ role: 'user', content: textContest }],
             temperature: 0.7,
         },

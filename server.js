@@ -12,9 +12,11 @@ const {
 } = require('./constants/menus')
 
 const arrayBlockListSendingGPT = [
+    '/start',
     '/add_feature',
     '/clean_context',
     'Clean context',
+    'Hello!',
 ]
 //==============================================
 
@@ -39,27 +41,27 @@ bot.on('callback_query', (callbackQuery) => {
 })
 
 bot.onText(/\/start/, (msg) => {
-    const opts = {
-        reply_markup: {
-            inline_keyboard: [
-                [
-                    {
-                        text: 'Нажми меня',
-                        callback_data: 'button_pressed',
-                    },
-                ],
-            ],
-        },
-    }
-    bot.sendMessage(msg.chat.id, 'Привет!', opts)
+    // const opts = {
+    //     reply_markup: {
+    //         keyboard: [
+    //             [
+    //                 {
+    //                     text: 'Нажми меня',
+    //                     callback_data: 'button_pressed',
+    //                 },
+    //             ],
+    //         ],
+    //     },
+    // }
+    bot.sendMessage(msg.chat.id, 'Hello!', startAlwaysMenu_2buttons)
 })
 
-bot.on('callback_query', (callbackQuery) => {
-    const data = callbackQuery.data
-    if (data === 'button_pressed') {
-        console.log('111111111 :>>----------- ')
-    }
-})
+// bot.on('callback_query', (callbackQuery) => {
+//     const data = callbackQuery.data
+//     if (data === 'button_pressed') {
+//         console.log('111111111 :>>----------- ')
+//     }
+// })
 
 // bot.on('callback_query', (query) => {
 

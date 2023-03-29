@@ -34,7 +34,7 @@ const inline_keyboard = {
             ],
             [
                 {
-                    text: 'What you want to add???',
+                    text: 'Click me If you have idea what I need to add anything to bot',
                     request_contact: true,
                 },
             ],
