@@ -10,6 +10,7 @@ const {
     callToAdminMenu,
     inline_keyboard,
 } = require('./constants/menus')
+const { textMessageHtml } = require('./constants/texts')
 
 const arrayBlockListSendingGPT = [
     '/start',
@@ -18,12 +19,50 @@ const arrayBlockListSendingGPT = [
     'Clean context',
     'Hello!',
 ]
-//==============================================
 
 console.log('__________________________________:>> ')
 
 var previousMessages = []
 
+// giveMeAnswer ==============================================
+
+bot.on('message', async (msg) => {
+    console.log('msg.text :>> ', msg.text)
+    if (arrayBlockListSendingGPT.includes(msg.text) !== true) {
+        const chatId = msg.chat.id
+        let prompt = msg.text
+        let answer = ''
+
+        answer = await giveMeAnswer(prompt, previousMessages)
+            .then((res) => res)
+            .catch((err) => {
+                console.log('err :>> _giveMeAnswer :  ', err)
+            })
+
+        console.log('answer :>> ', answer)
+        bot.sendMessage(chatId, answer)
+    }
+})
+
+bot.onText(/\/start/, (msg) => {
+    // let textMessageHtml = `<b>_______________________________</b>
+    // <b>${wordLineDictionary} </b>
+    // <a href="${linkToTranslate}">Translate with Google</a>
+    // `
+
+    bot.sendMessage(
+        msg.chat.id,
+        textMessageHtml,
+        {
+            parse_mode: 'HTML',
+            //disable because we don't want show description links
+            disable_web_page_preview: true,
+        },
+        startAlwaysMenu_2buttons,
+    )
+})
+
+// callback_query
 // //processing selections on the internal bot keyboard
 
 bot.on('callback_query', (callbackQuery) => {
@@ -40,20 +79,32 @@ bot.on('callback_query', (callbackQuery) => {
     }
 })
 
-bot.onText(/\/start/, (msg) => {
-    // const opts = {
-    //     reply_markup: {
-    //         keyboard: [
-    //             [
-    //                 {
-    //                     text: 'Нажми меня',
-    //                     callback_data: 'button_pressed',
-    //                 },
-    //             ],
-    //         ],
-    //     },
-    // }
-    bot.sendMessage(msg.chat.id, 'Hello!', startAlwaysMenu_2buttons)
+//===========================
+//handler add_feature from BotFather
+
+bot.onText(/\/add_feature/, (msg) => {
+    bot.sendMessage(
+        msg.chat.id,
+        'Click the button to contact the administrator',
+        callToAdminMenu,
+    )
+})
+
+//==============================================
+//processing selections on keyboard BotFather
+
+bot.onText(/\/clean_context/, (msg) => {
+    console.log('bot.onText conn_context/ :>> ')
+    console.log('msg_____clean_context------- :>> ', msg)
+    previousMessages = []
+
+    bot.sendMessage(
+        msg.chat.id,
+        'Context was cleaned',
+        startAlwaysMenu_2buttons,
+        // inline_keyboard,
+    )
+    // bot.sendMessage(msg.chat.id, 'Context was cleaned')
 })
 
 // bot.on('callback_query', (callbackQuery) => {
@@ -80,69 +131,13 @@ bot.onText(/\/start/, (msg) => {
 //     }
 // })
 
-//===========================
-//handler add_feature from BotFather
-
-bot.onText(/\/add_feature/, (msg) => {
-    bot.sendMessage(
-        msg.chat.id,
-        'Click the button to contact the administrator',
-        callToAdminMenu,
-    )
-})
-
-//
+// send message to admin with ask to add anything
 bot.on('contact', (msg) => {
     bot.sendMessage(
         chatIdAdmin,
         `Message from ${msg.from.first_name}  :
          ${msg.contact.phone_number}`,
     )
-})
-
-bot.onText(/\/text (.+)/, (msg, match) => {
-    const chatId = msg.chat.id
-    const text = match[1]
-
-    bot.sendMessage(chatId, text)
-})
-
-//==============================================
-//processing selections on keyboard BotFather
-
-bot.onText(/\/clean_context/, (msg) => {
-    console.log('bot.onText conn_context/ :>> ')
-    console.log('msg_____clean_context------- :>> ', msg)
-    previousMessages = []
-
-    bot.sendMessage(
-        msg.chat.id,
-        'Context was cleaned',
-
-        startAlwaysMenu_2buttons,
-        // inline_keyboard,
-    )
-    // bot.sendMessage(msg.chat.id, 'Context was cleaned')
-})
-
-// giveMeAnswer ==============================================
-
-bot.on('message', async (msg) => {
-    console.log('msg.text :>> ', msg.text)
-    if (arrayBlockListSendingGPT.includes(msg.text) !== true) {
-        const chatId = msg.chat.id
-        let prompt = msg.text
-        let answer = ''
-
-        answer = await giveMeAnswer(prompt, previousMessages)
-            .then((res) => res)
-            .catch((err) => {
-                console.log('err :>> _giveMeAnswer :  ', err)
-            })
-
-        console.log('answer :>> ', answer)
-        bot.sendMessage(chatId, answer)
-    }
 })
 
 module.exports = bot

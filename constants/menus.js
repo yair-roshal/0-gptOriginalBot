@@ -13,7 +13,7 @@ const startAlwaysMenu_2buttons = {
             ],
             [
                 {
-                    text: 'What you want to add???',
+                    text: '🎯 If you want to add anything to bot, chat me !!! 🎯',
                     request_contact: true,
                 },
             ],
@@ -28,14 +28,8 @@ const inline_keyboard = {
         inline_keyboard: [
             [
                 {
-                    text: '/clean_context',
-                    callback_data: 'clean_context',
-                },
-            ],
-            [
-                {
-                    text: 'Click me If you have idea what I need to add anything to bot',
-                    request_contact: true,
+                    text: 'OK',
+                    callback_data: 'ok',
                 },
             ],
         ],
