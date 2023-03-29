@@ -1,15 +1,5 @@
-const callToAdminMenu = {
-    reply_markup: {
-        keyboard: [
-            [
-                {
-                    text: 'Contact the admin',
-                    request_contact: true,
-                },
-            ],
-        ],
-    },
-}
+//==================================
+
 const startAlwaysMenu_2buttons = {
     reply_markup: {
         keyboard: [
@@ -31,17 +21,22 @@ const startAlwaysMenu_2buttons = {
     },
 }
 
-const testMenu = {
-    // reply_to_message_id: msg.message_id,
-    reply_markup: JSON.stringify({
-        inline_keyboard: [[{ text: 'Level 1' }]],
-    }),
+//==================================
+
+const callToAdminMenu = {
+    reply_markup: {
+        keyboard: [
+            [
+                {
+                    text: 'Contact the admin',
+                    request_contact: true,
+                },
+            ],
+        ],
+    },
 }
- 
 
 module.exports = {
-   
-    testMenu,
     startAlwaysMenu_2buttons,
     callToAdminMenu,
 }

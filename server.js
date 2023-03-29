@@ -82,9 +82,7 @@ bot.on('message', async (msg) => {
     console.log('msg.text :>> ', msg.text)
     if (['/add_feature', '/clean_context'].includes(msg.text) !== true) {
         const chatId = msg.chat.id
-
         let prompt = msg.text
-
         let answer = ''
 
         answer = await giveMeAnswer(prompt, previousMessages)
