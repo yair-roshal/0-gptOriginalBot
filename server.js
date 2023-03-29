@@ -9,7 +9,7 @@ const {
     startAlwaysMenu_2buttons,
     callToAdminMenu,
     inline_keyboard,
-} = require('./constants/constants')
+} = require('./constants/menus')
 
 const arrayBlockListSendingGPT = [
     '/add_feature',
@@ -21,6 +21,62 @@ const arrayBlockListSendingGPT = [
 console.log('__________________________________:>> ')
 
 var previousMessages = []
+
+// //processing selections on the internal bot keyboard
+
+bot.on('callback_query', (callbackQuery) => {
+    console.log('callbackQuery ---------------:>> ', callbackQuery)
+    console.log('55555_ :>>callback_query ')
+    const data = callbackQuery.data
+    if (data === 'clean_context') {
+        bot.sendMessage(
+            chatIdAdmin,
+            'All was cleaned',
+            startAlwaysMenu_2buttons,
+            // inline_keyboard,
+        )
+    }
+})
+
+bot.onText(/\/start/, (msg) => {
+    const opts = {
+        reply_markup: {
+            inline_keyboard: [
+                [
+                    {
+                        text: 'Нажми меня',
+                        callback_data: 'button_pressed',
+                    },
+                ],
+            ],
+        },
+    }
+    bot.sendMessage(msg.chat.id, 'Привет!', opts)
+})
+
+bot.on('callback_query', (callbackQuery) => {
+    const data = callbackQuery.data
+    if (data === 'button_pressed') {
+        console.log('111111111 :>>----------- ')
+    }
+})
+
+// bot.on('callback_query', (query) => {
+
+//     console.log('query11111 :>> ', query)
+//     console.log('55555_ :>>callback_query ')
+
+//     if (query.data === 'clean_context') {
+//         console.log('query.data = clean_context :>> ')
+
+//         bot.sendMessage(
+//             chatIdAdmin,
+//             'All was cleaned',
+//             startAlwaysMenu_2buttons,
+//             // inline_keyboard,
+//         )
+//     }
+// })
 
 //===========================
 //handler add_feature from BotFather
@@ -50,7 +106,7 @@ bot.onText(/\/text (.+)/, (msg, match) => {
 })
 
 //==============================================
-//processing selections on   keyboard BotFather
+//processing selections on keyboard BotFather
 
 bot.onText(/\/clean_context/, (msg) => {
     console.log('bot.onText conn_context/ :>> ')
@@ -67,10 +123,7 @@ bot.onText(/\/clean_context/, (msg) => {
     // bot.sendMessage(msg.chat.id, 'Context was cleaned')
 })
 
-//==============================================
-
-//==============================================
-//giveMeAnswer
+// giveMeAnswer ==============================================
 
 bot.on('message', async (msg) => {
     console.log('msg.text :>> ', msg.text)

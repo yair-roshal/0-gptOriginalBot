@@ -6,8 +6,8 @@ const startAlwaysMenu_2buttons = {
             // inline_keyboard: [
             [
                 {
-                    text: 'Clean context',
-                    // text: '/clean_context',
+                    // text: 'Clean context',
+                    text: '/clean_context',
                     callback_data: 'clean_context',
                 },
             ],
