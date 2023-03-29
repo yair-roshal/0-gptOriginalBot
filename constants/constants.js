@@ -1,58 +1,47 @@
-const startMenu = {
+const callToAdminMenu = {
     reply_markup: {
         keyboard: [
             [
                 {
-                    text: 'Main',
-                },
-                {
-                    text: 'Description',
-                },
-            ],
-            [
-                {
-                    text: 'Order bot development',
+                    text: 'Contact the admin',
                     request_contact: true,
                 },
             ],
-            [
-                {
-                    text: 'About me',
-                },
-            ],
         ],
-        one_time_keyboard: true,
-        resize_keyboard: true,
     },
 }
-
-const mainMenu = {
+const startAlwaysMenu_2buttons = {
     reply_markup: {
         keyboard: [
             [
-                [
-                    {
-                        text: 'Development',
-                        callback_data: 'development',
-                    },
-                    {
-                        text: 'Lifestyle',
-                        callback_data: 'lifestyle',
-                    },
-                ],
-                [
-                    {
-                        text: 'Other',
-                        callback_data: 'other',
-                    },
-                ],
+                {
+                    text: 'Clean context',
+                    callback_data: 'clean_context',
+                },
+            ],
+            [
+                {
+                    text: 'What you want to add???',
+                    request_contact: true,
+                },
             ],
         ],
-        // keyboard: [['Sample text', 'Second sample'], ['Keyboard'], ["I'm robot"]],
         resize_keyboard: true,
         one_time_keyboard: true,
-        // force_reply: true,
     },
 }
 
-module.exports = { startMenu, mainMenu }
+const testMenu = {
+    // reply_to_message_id: msg.message_id,
+    reply_markup: JSON.stringify({
+        inline_keyboard: [[{ text: 'Level 1' }]],
+    }),
+}
+ 
+
+module.exports = {
+   
+    testMenu,
+    startAlwaysMenu_2buttons,
+    callToAdminMenu,
+}
