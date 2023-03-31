@@ -4,7 +4,6 @@ let link_to_public = 'https://t.me/+yBx2E6PWO4wyN2U0'
 let textMessageHtml = `<b>_______________________________</b>
 <b>Hello my Friend</b> 
 
- 
 This bot gives you access to OpenAI products such as ChatGPT and Dall-E to create text and images.
 
 ⚡Bot uses the same model as ChatGPT: gpt-3.5-turbo.

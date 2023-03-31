@@ -1,10 +1,13 @@
 require('dotenv').config()
 const TelegramBot = require('node-telegram-bot-api')
-const token = process.env.TELEGRAM_BOT_TOKEN
+const token = (NODE_ENV = prod
+    ? process.env.TELEGRAM_BOT_TOKEN
+    : TELEGRAM_BOT_TOKEN_testing)
 const bot = new TelegramBot(token, { polling: true })
 const chatIdAdmin = process.env.CHAT_ID_ADMIN
 const giveMeAnswer = require('./utils/giveMeAnswer.js')
 const bot_on_callback_query = require('./utils/bot_on_callback_query.js')
+
 const {
     startAlwaysMenu_2buttons,
     callToAdminMenu,
@@ -20,12 +23,10 @@ const arrayBlockListSendingGPT = [
     'Hello!',
 ]
 
-console.log('__________________________________:>> ')
-
 var previousMessages = []
 
+console.log('__________________________________:>> ')
 // giveMeAnswer ==============================================
-
 bot.on('message', async (msg) => {
     console.log('msg.text :>> ', msg.text)
     if (arrayBlockListSendingGPT.includes(msg.text) !== true) {
