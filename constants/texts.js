@@ -1,3 +1,6 @@
+let link_to_bot = 't.me/gptOriginalBot'
+let link_to_public = 'https://t.me/+yBx2E6PWO4wyN2U0'
+
 let textMessageHtml = `<b>_______________________________</b>
 <b>Hello my Friend</b> 
 
@@ -19,6 +22,9 @@ You can communicate with the bot as with a live interlocutor by asking questions
 🔄 To remove the dialog context, use the command /clean_context.
 
 💬 If you have any questions or suggestions, email admin @yair770.
+
+
+<a href="${link_to_bot}">GPT Original Bot</a> | <a href="${link_to_public}">News AI</a>
  `
 
 module.exports = { textMessageHtml }
