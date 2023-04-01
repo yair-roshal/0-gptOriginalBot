@@ -46,10 +46,10 @@ bot.on('message', async (msg) => {
 
         const tempMessage =
             msgLangCode === 'ru'
-                ? 'Пожалуйста, подождите...'
+                ? 'Пожалуйста, подождите немного, пока чатбот ответит на ваш запрос...'
                 : msgLangCode === 'he'
-                ? 'המתן בבקשה...'
-                : 'Please Wait...'
+                ? 'אנא המתן רגע בזמן שהבוט יגיב לבקשתך...'
+                : 'Please wait a moment while the chatbot responds to your query . . .'
         let tempMsgId
         bot.sendMessage(chatId, tempMessage).then((tempMsg) => {
             tempMsgId = tempMsg.message_id
