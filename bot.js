@@ -28,7 +28,7 @@ var previousMessages = []
 
 var previousMessages = {}
 
-console.log('__________________________________:>> ')
+console.log('bot started__________________________________:>> ')
 console.log('process.env.NODE_ENV :>> ', process.env.NODE_ENV)
 
 // giveMeAnswer ==============================================
@@ -38,15 +38,29 @@ bot.on('message', async (msg) => {
         const chatId = msg.chat.id
         let prompt = msg.text
         let answer = ''
-
-        answer = await giveMeAnswer(prompt, previousMessages, chatId)
+        previousMessagesUserId = previousMessages[chatId] || []
+        answer = await giveMeAnswer(prompt, previousMessagesUserId)
             .then((res) => res)
             .catch((err) => {
                 console.log('err :>> _giveMeAnswer :  ', err)
             })
+        //====================
 
+        console.log('new request for answer=========== :>> ')
+        console.log('msg.from.first_name  :>> ', msg.from.first_name)
+        console.log('msg.from.username  :>> ', msg.from.username)
+        console.log('prompt', prompt)
+        console.log(
+            'previousMessagesUserId = CONTEXT :>> ',
+            previousMessagesUserId,
+        )
         console.log('answer :>> ', answer)
+        //====================
+
         bot.sendMessage(chatId, answer)
+        //====================
+        previousMessages[chatId] = previousMessages[chatId] || []
+        previousMessages[chatId].push(prompt)
     }
 })
 
