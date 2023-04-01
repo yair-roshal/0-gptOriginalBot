@@ -36,14 +36,35 @@ bot.on('message', async (msg) => {
     console.log('msg.text :>> ', msg.text)
     if (arrayBlockListSendingGPT.includes(msg.text) !== true) {
         const chatId = msg.chat.id
+        const msgLangCode = msg.from.language_code
         let prompt = msg.text
         let answer = ''
         previousMessagesUserId = previousMessages[chatId] || []
+
+        bot.sendChatAction(chatId, 'typing')
+
+        const tempMessage =
+            msgLangCode === 'ru'
+                ? 'Пожалуйста, подождите...'
+                : msgLangCode === 'he'
+                ? 'המתן בבקשה...'
+                : 'Please Wait...'
+        let tempMsgId
+        bot.sendMessage(chatId, tempMessage).then((tempMsg) => {
+            tempMsgId = tempMsg.message_id
+        })
+
         answer = await giveMeAnswer(prompt, previousMessagesUserId)
             .then((res) => res)
             .catch((err) => {
                 console.log('err :>> _giveMeAnswer :  ', err)
             })
+
+        bot.sendMessage(chatId, answer).then(() => {
+            // удаляем временное сообщение
+            bot.deleteMessage(chatId, tempMsgId)
+        })
+
         //====================
         let loggingObj = {
             firstName: msg.from.first_name,
@@ -56,7 +77,6 @@ bot.on('message', async (msg) => {
         console.log(loggingObj)
         //====================
 
-        bot.sendMessage(chatId, answer)
         //=========
         bot.sendMessage(
             chatIdAdmin,
