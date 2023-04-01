@@ -7,6 +7,7 @@ const token =
 const bot = new TelegramBot(token, { polling: true })
 const chatIdAdmin = process.env.CHAT_ID_ADMIN
 const giveMeAnswer = require('./utils/giveMeAnswer.js')
+const formatDate = require('./utils/formatDate.js')
 // const bot_on_callback_query = require('./utils/bot_on_callback_query.js')
 
 const {
@@ -24,11 +25,11 @@ const arrayBlockListSendingGPT = [
     'Hello!',
 ]
 
-var previousMessages = []
-
 var previousMessages = {}
+const timestamp = Date.now()
+const formattedDate = formatDate(timestamp)
+console.log('bot started__________________________________:>> ', formattedDate)
 
-console.log('bot started__________________________________:>> ')
 console.log('process.env.NODE_ENV :>> ', process.env.NODE_ENV)
 
 // giveMeAnswer ==============================================
@@ -65,8 +66,12 @@ bot.on('message', async (msg) => {
             bot.deleteMessage(chatId, tempMsgId)
         })
 
+        const timestamp = Date.now()
+        const formattedDate = formatDate(timestamp)
+
         //====================
         let loggingObj = {
+            Date: formattedDate,
             firstName: msg.from.first_name,
             username: msg.from.username,
             prompt: prompt,
@@ -78,16 +83,7 @@ bot.on('message', async (msg) => {
         //====================
 
         //=========
-        bot.sendMessage(
-            chatIdAdmin,
-            JSON.stringify({
-                firstName: msg.from.first_name,
-                username: msg.from.username,
-                prompt: prompt,
-                context: previousMessagesUserId,
-                answer: answer,
-            }),
-        )
+        bot.sendMessage(chatIdAdmin, JSON.stringify(loggingObj, null, 2))
         //====================
         previousMessages[chatId] = previousMessages[chatId] || []
         previousMessages[chatId].push(prompt)
