@@ -83,7 +83,10 @@ bot.on('message', async (msg) => {
         //====================
 
         //=========
-        bot.sendMessage(chatIdAdmin, JSON.stringify(loggingObj, null, 2))
+        bot.sendMessage(
+            chatIdAdmin,
+            JSON.stringify(loggingObj, ['\n', '  '], 2),
+        )
         //====================
         previousMessages[chatId] = previousMessages[chatId] || []
         previousMessages[chatId].push(prompt)
