@@ -51,6 +51,7 @@ bot.on('message', async (msg) => {
                 ? 'אנא המתן רגע בזמן שהבוט יגיב לבקשתך...'
                 : 'Please wait a moment while the chatbot responds to your query . . .'
         let tempMsgId
+
         bot.sendMessage(chatId, tempMessage).then((tempMsg) => {
             tempMsgId = tempMsg.message_id
         })
@@ -61,10 +62,16 @@ bot.on('message', async (msg) => {
                 console.log('err :>> _giveMeAnswer :  ', err)
             })
 
-        bot.sendMessage(chatId, answer).then(() => {
-            // удаляем временное сообщение
-            bot.deleteMessage(chatId, tempMsgId)
-        })
+        if (answer.length > 4096) {
+            const parts = message.match(/[\s\S]{1,4096}/g) || []
+            parts.forEach((part) => {
+                bot.sendMessage(chatId, part)
+            })
+        } else {
+            bot.sendMessage(chatId, answer)
+        }
+
+        bot.deleteMessage(chatId, tempMsgId)
 
         const timestamp = Date.now()
         const formattedDate = formatDate(timestamp)
