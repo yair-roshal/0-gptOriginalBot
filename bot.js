@@ -7,7 +7,7 @@ const token =
 const bot = new TelegramBot(token, { polling: true })
 const chatIdAdmin = process.env.CHAT_ID_ADMIN
 const giveMeAnswer = require('./utils/giveMeAnswer.js')
-const bot_on_callback_query = require('./utils/bot_on_callback_query.js')
+// const bot_on_callback_query = require('./utils/bot_on_callback_query.js')
 
 const {
     startAlwaysMenu_2buttons,
@@ -45,19 +45,29 @@ bot.on('message', async (msg) => {
                 console.log('err :>> _giveMeAnswer :  ', err)
             })
         //====================
+        let loggingObj = {
+            firstName: msg.from.first_name,
+            username: msg.from.username,
+            prompt: prompt,
+            context: previousMessagesUserId,
+            answer: answer,
+        }
 
-        console.log('new request for answer=========== :>> ')
-        console.log('msg.from.first_name  :>> ', msg.from.first_name)
-        console.log('msg.from.username  :>> ', msg.from.username)
-        console.log('prompt', prompt)
-        console.log(
-            'previousMessagesUserId = CONTEXT :>> ',
-            previousMessagesUserId,
-        )
-        console.log('answer :>> ', answer)
+        console.log(loggingObj)
         //====================
 
         bot.sendMessage(chatId, answer)
+        //=========
+        bot.sendMessage(
+            chatIdAdmin,
+            JSON.stringify({
+                firstName: msg.from.first_name,
+                username: msg.from.username,
+                prompt: prompt,
+                context: previousMessagesUserId,
+                answer: answer,
+            }),
+        )
         //====================
         previousMessages[chatId] = previousMessages[chatId] || []
         previousMessages[chatId].push(prompt)
