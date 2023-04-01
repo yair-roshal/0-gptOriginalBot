@@ -25,6 +25,9 @@ const arrayBlockListSendingGPT = [
 ]
 
 var previousMessages = []
+
+var previousMessages = {}
+
 console.log('__________________________________:>> ')
 console.log('process.env.NODE_ENV :>> ', process.env.NODE_ENV)
 
@@ -36,7 +39,7 @@ bot.on('message', async (msg) => {
         let prompt = msg.text
         let answer = ''
 
-        answer = await giveMeAnswer(prompt, previousMessages)
+        answer = await giveMeAnswer(prompt, previousMessages, chatId)
             .then((res) => res)
             .catch((err) => {
                 console.log('err :>> _giveMeAnswer :  ', err)
@@ -48,8 +51,10 @@ bot.on('message', async (msg) => {
 })
 
 bot.onText(/\/start/, (msg) => {
+    const chatId = msg.chat.id
+
     bot.sendMessage(
-        msg.chat.id,
+        chatId,
         textMessageHtml,
         {
             parse_mode: 'HTML',
@@ -81,8 +86,10 @@ bot.on('callback_query', (callbackQuery) => {
 //handler add_feature from BotFather
 
 bot.onText(/\/add_feature/, (msg) => {
+    const chatId = msg.chat.id
+
     bot.sendMessage(
-        msg.chat.id,
+        chatId,
         'Click the button to contact the administrator',
         callToAdminMenu,
     )
@@ -92,17 +99,19 @@ bot.onText(/\/add_feature/, (msg) => {
 //processing selections on keyboard BotFather
 
 bot.onText(/\/clean_context/, (msg) => {
+    const chatId = msg.chat.id
+
     console.log('bot.onText conn_context/ :>> ')
     console.log('msg_____clean_context------- :>> ', msg)
-    previousMessages = []
+    previousMessages[chatId] = []
 
     bot.sendMessage(
-        msg.chat.id,
+        chatId,
         'Context was cleaned',
         startAlwaysMenu_2buttons,
         // inline_keyboard,
     )
-    // bot.sendMessage(msg.chat.id, 'Context was cleaned')
+    // bot.sendMessage(chatId, 'Context was cleaned')
 })
 
 // bot.on('callback_query', (callbackQuery) => {

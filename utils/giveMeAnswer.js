@@ -2,11 +2,11 @@ const openaiApiKey = process.env.OPENAI_API_KEY
 const axios = require('axios')
 const { config_1, config_2 } = require('./../constants/config')
 
-module.exports = giveMeAnswer = async (textRequest, previousMessages) => {
+module.exports = giveMeAnswer = async (textRequest, previousMessages,chatId) => {
     console.log('previousMessages = CONTEXT :>> ', previousMessages)
-    let textContest = `${previousMessages.join('\n')} \n\n ${textRequest}`
+    let textContest = `${previousMessages[chatId].join('\n')} \n\n ${textRequest}`
 
-    previousMessages.push(textRequest)
+    previousMessages[chatId].push(textRequest)
 
     console.log('textContest :>> ', textContest)
 
