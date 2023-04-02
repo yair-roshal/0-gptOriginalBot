@@ -63,10 +63,23 @@ bot.on('message', async (msg) => {
             })
 
         if (answer.length > 4096) {
-            const parts = message.match(/[\s\S]{1,4096}/g) || []
-            parts.forEach((part) => {
-                bot.sendMessage(chatId, part)
+            const chunkSize = 4000
+            const chunks = []
+
+            for (let i = 0; i < answer.length; i += chunkSize) {
+                chunks.push(answer.slice(i, i + chunkSize))
+            }
+
+            console.log(chunks)
+
+            chunks.forEach((chunk) => {
+                bot.sendMessage(chatId, chunk)
             })
+
+            // const parts = message.match(/[\s\S]{1,4096}/g) || []
+            // parts.forEach((part) => {
+            //     bot.sendMessage(chatId, part)
+            // })
         } else {
             bot.sendMessage(chatId, answer)
         }
@@ -90,7 +103,10 @@ bot.on('message', async (msg) => {
         //====================
 
         //=========
-        bot.sendMessage(chatIdAdmin, JSON.stringify(loggingObj, null, '\n  '))
+        bot.sendMessage(
+            chatIdAdmin,
+            '________' + '\n' + JSON.stringify(loggingObj, null, '\n  '),
+        )
         //====================
         previousMessages[chatId] = previousMessages[chatId] || []
         previousMessages[chatId].push(prompt)
