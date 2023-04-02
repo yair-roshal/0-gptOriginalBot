@@ -9,7 +9,7 @@ module.exports = {
             error_file: './newBot-error.log',
             merge_logs: true,
             log_date_format: 'DD-MM-YYYY HH:mm:ss',
-            log_type: 'json',
+            // log_type: 'json',
 
             watch: true,
 
