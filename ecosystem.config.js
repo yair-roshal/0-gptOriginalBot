@@ -20,6 +20,8 @@ module.exports = {
                 './yarn.lock',
                 '*.log',
                 '*.txt',
+                'newBot-out.log',
+                'newBot-error.log',
             ],
 
             // Env Specific Config
