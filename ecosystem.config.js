@@ -23,16 +23,18 @@ module.exports = {
                 './samples',
                 './src',
             ],
-            exec_mode: 'cluster',
-            instances: 'max',
 
             // Env Specific Config
-            env_production: {
+            env_prod: {
                 NODE_ENV: 'prod',
+                exec_mode: 'cluster',
+                instances: 'max',
             },
-            env_development: {
+            env_dev: {
                 NODE_ENV: 'dev',
             },
         },
     ],
 }
+
+--no - daemon
