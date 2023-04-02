@@ -15,13 +15,11 @@ module.exports = {
 
             ignore_watch: [
                 './node_modules',
-                './app/views',
-                './public',
                 './.DS_Store',
                 './package.json',
                 './yarn.lock',
-                './samples',
-                './src',
+                '*.log',
+                '*.txt',
             ],
 
             // Env Specific Config
