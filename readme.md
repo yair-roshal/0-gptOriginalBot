@@ -1,12 +1,19 @@
 # gptOriginalBotClear - GPT Original Bot For sending your answers from GPT CHAT
 
-## Demo of App :
+## We don't using your data!!! :
 
- 
+## We save only your latests requests in temportary array on server for using your context in your futures requests:
+
+```
+previousMessages[chatId] = []
+```
+
+## Demo of App :
 
 ### Full version of Message :
 
-<img src="images/gpt-bot-example.png"  />
+<img src="images/gpt-bot-example-01.png"  />
+<img src="images/gpt-bot-example-02.png"  />
  
 # How to Contribute to Open Source:
 
