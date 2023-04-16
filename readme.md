@@ -1,4 +1,4 @@
-# gptOriginalBot - GPT Original Bot For sending your answers from GPT CHAT
+# gptOriginalBotClear - GPT Original Bot For sending your answers from GPT CHAT
 
 ## Demo of App :
 
@@ -12,7 +12,7 @@
 
 ## Forking a Project :
 
-`git clone https://github.com/yair-roshal/0-gptOriginalBot`
+`git clone https://github.com/yair-roshal/0-gptOriginalBotClear`
 
 Once you're done making changes, you can upload the updated files back to GitHub using the command
 `git push origin master`
@@ -21,7 +21,7 @@ Once you're done making changes, you can upload the updated files back to GitHub
 
 If you'd like to keep track of the upstream project (the one that you forked to create your own), then you'll need to add what's called an additional remote. This is basically just another keyword you can use while you're inside your application's folder. To create the new remote, run the command
 
-`git remote add upstream https://github.com/yair-roshal/0-gptOriginalBot`
+`git remote add upstream https://github.com/yair-roshal/0-gptOriginalBotClear`
 
 ## Merging Upstream Changes
 

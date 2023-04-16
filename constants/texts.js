@@ -1,4 +1,4 @@
-let link_to_bot = 't.me/gptOriginalBot'
+let link_to_bot = 't.me/gptOriginalBotClear'
 let link_to_public = 'https://t.me/+yBx2E6PWO4wyN2U0'
 
 let textMessageHtml = `<b>_______________________________</b>
