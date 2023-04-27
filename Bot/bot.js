@@ -4,6 +4,8 @@ const token =
     process.env.NODE_ENV === 'prod'
         ? process.env.TELEGRAM_BOT_TOKEN
         : process.env.TELEGRAM_BOT_TOKEN_testing
+
+console.log('token :>> ', !!token)
 const bot = new TelegramBot(token, { polling: true })
 const chatIdAdmin = process.env.CHAT_ID_ADMIN
 const giveMeAnswer = require('../utils/giveMeAnswer.js')
