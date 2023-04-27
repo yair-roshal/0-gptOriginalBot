@@ -1,5 +1,8 @@
 let link_to_bot = 't.me/gptOriginalBotClear'
-let link_to_public = 'https://t.me/+yBx2E6PWO4wyN2U0'
+let link_to_channel = 'https://t.me/+yBx2E6PWO4wyN2U0'
+
+let text_to_subscribe = `Please subscribe to the channel first! : <a href="${link_to_channel}">News AI</a>
+`
 
 let textMessageHtml = `<b>_______________________________</b>
 <b>Hello my Friend</b> 
@@ -22,17 +25,11 @@ A small example of what this bot can do:
 
 And much more! The possibilities of the bot are limited only by your imagination. Use it and share it with your friends! 👉🏻 <a href="${link_to_bot}">GPT Original Bot</a>
 
-
 You can communicate with the bot as with a live interlocutor by asking questions in any language. Note that sometimes the bot makes up facts and has limited knowledge about events after 2021.
 
 ✉️ To get a text response, just chat your question.
  
-🔄 To remove the dialog context, use the command /clean_context.
-
-💬 If you have any questions or suggestions, email admin @yair770.
-
-
-Tips for proper use:
+🔄 Tips for proper use:
 - Ask meaningful questions, write in more detail.
 - Don't write nonsense or you'll get the same nonsense in return.
 
@@ -42,9 +39,17 @@ Examples of questions/questions:
 ~ Write Python calculator code.
 ~ Write an essay about how I spent my summer
 
-🔥 Чтобы начать общение, напиши что-нибудь CHATGPT в строку ниже 👇🏻
+ 
+Link to this Bot : <a href="${link_to_bot}">Give Me Word Bot</a> 
 
-<a href="${link_to_bot}">GPT Original Bot</a> | <a href="${link_to_public}">News AI</a>
+Our Group in Telegram : <a href="${link_to_channel}">News AI</a>
+
+💬 If you have any questions or suggestions, email admin @yair770.
+
+🔥 To start getting words, click on start below 👇🏻 or here /start
+
+
+
  `
 
-module.exports = { textMessageHtml }
+module.exports = { textMessageHtml, link_to_channel, text_to_subscribe }

@@ -6,19 +6,24 @@ const token =
         : process.env.TELEGRAM_BOT_TOKEN_testing
 const bot = new TelegramBot(token, { polling: true })
 const chatIdAdmin = process.env.CHAT_ID_ADMIN
-const giveMeAnswer = require('./utils/giveMeAnswer.js')
-const formatDate = require('./utils/formatDate.js')
-// const bot_on_callback_query = require('./utils/bot_on_callback_query.js')
+const giveMeAnswer = require('../utils/giveMeAnswer.js')
+const formatDate = require('../utils/formatDate.js')
 
 const {
     startAlwaysMenu_2buttons,
     callToAdminMenu,
-    inline_keyboard,
-} = require('./constants/menus')
-const { textMessageHtml } = require('./constants/texts')
+    clear_context,
+    keyboardSubscribeButton,
+} = require('../constants/menus.js')
+const {
+    textMessageHtml,
+    link_to_channel,
+    text_to_subscribe,
+} = require('../constants/texts.js')
 
 const arrayBlockListSendingGPT = [
     '/start',
+    '/about',
     '/add_feature',
     '/clean_context',
     'Clean context',
@@ -32,9 +37,81 @@ console.log('bot started__________________________________:>> ', formattedDate)
 
 console.log('process.env.NODE_ENV :>> ', process.env.NODE_ENV)
 
+var optionHTML = {
+    // reply_markup: JSON.stringify(clear_context),
+    parse_mode: 'HTML',
+    // disable_web_page_preview: true,
+}
+
+var optionSubscribeButton = {
+    reply_markup: JSON.stringify(keyboardSubscribeButton),
+    parse_mode: 'HTML',
+    // disable_web_page_preview: true,
+}
+
+bot.sendMessage(
+    chatIdAdmin,
+    'server started - let start bot  /start',
+    optionHTML,
+)
+
+bot.onText(/\/start/, async (msg) => {
+    console.log('/start :>> ')
+    const chatId = msg.from.id
+
+    let link_to_channel = '@originalBotNewsAI'
+
+    // bot.getChat(link_to_channel)
+    //     .then((chat) => {
+    //         console.log(link_to_channel + '------>>>>')
+    //         console.log(chat)
+    //         // continue with bot setup
+    //     })
+    //     .catch((error) => {
+    //         console.log('error getChat:>> ')
+    //         // console.log('error originalBotNewsAI:>> ', error)
+    //         // handle error
+    //     })
+
+    bot.getChatMember(link_to_channel, chatId)
+        .then((chatMember) => {
+            if (
+                false
+                // chatMember.status === 'member' ||
+                // chatMember.status === 'administrator' ||
+                // chatMember.status === 'creator'
+            ) {
+                bot.sendMessage(chatId, 'Welcome to the bot!')
+                // continue with bot setup
+            } else {
+                bot.sendMessage(
+                    chatId,
+               
+
+                    text_to_subscribe,
+                    optionSubscribeButton,
+                    // optionHTML,
+                    
+                 )
+                // stop bot setup
+            }
+        })
+        .catch((error) => {
+            console.log('error getChatMember :>> ')
+            // console.log('error :>> ', error)
+        })
+
+    // bot.sendMessage(chatId, textMessageHtml, optionHTML)
+})
+
+bot.onText(/\/about/, (msg) => {
+    const chatId = msg.chat.id
+    bot.sendMessage(chatId, textMessageHtml, optionHTML)
+})
+
 // giveMeAnswer ==============================================
 bot.on('message', async (msg) => {
-    console.log('msg.text :>> ', msg.text)
+    console.log('message ---->>> ', msg.text)
     if (arrayBlockListSendingGPT.includes(msg.text) !== true) {
         const chatId = msg.chat.id
         const msgLangCode = msg.from.language_code
@@ -46,7 +123,7 @@ bot.on('message', async (msg) => {
 
         const tempMessage =
             msgLangCode === 'ru'
-                ? 'Пожалуйста, подождите немного, пока чатбот ответит на ваш запрос...'
+                ? 'Пожалуйста, подождите немного, пока чат бот ответит на ваш запрос...'
                 : msgLangCode === 'he'
                 ? 'אנא המתן רגע בזמן שהבוט יגיב לבקשתך...'
                 : 'Please wait a moment while the chatbot responds to your query . . .'
@@ -62,6 +139,12 @@ bot.on('message', async (msg) => {
                 console.log('err :>> _giveMeAnswer :  ', err)
             })
 
+        var optionClearKeyboard = {
+            reply_markup: JSON.stringify(clear_context),
+            // parse_mode: 'HTML',
+            // disable_web_page_preview: true,
+        }
+
         if (answer.length > 4096) {
             const chunkSize = 4000
             const chunks = []
@@ -73,15 +156,10 @@ bot.on('message', async (msg) => {
             console.log(chunks)
 
             chunks.forEach((chunk) => {
-                bot.sendMessage(chatId, chunk)
+                bot.sendMessage(chatId, chunk, optionClearKeyboard)
             })
-
-            // const parts = message.match(/[\s\S]{1,4096}/g) || []
-            // parts.forEach((part) => {
-            //     bot.sendMessage(chatId, part)
-            // })
         } else {
-            bot.sendMessage(chatId, answer)
+            bot.sendMessage(chatId, answer, optionClearKeyboard)
         }
 
         bot.deleteMessage(chatId, tempMsgId)
@@ -113,33 +191,21 @@ bot.on('message', async (msg) => {
     }
 })
 
-bot.onText(/\/start/, (msg) => {
-    const chatId = msg.chat.id
-
-    bot.sendMessage(
-        chatId,
-        textMessageHtml,
-        {
-            parse_mode: 'HTML',
-            //disable because we don't want show description links
-            disable_web_page_preview: true,
-        },
-        startAlwaysMenu_2buttons,
-    )
-})
-
 // callback_query
 // //processing selections on the internal bot keyboard
 
 bot.on('callback_query', (callbackQuery) => {
-    console.log('callbackQuery ---------------:>> ', callbackQuery)
     console.log('55555_ :>>callback_query ')
+    console.log('callbackQuery ---------------:>> ', callbackQuery)
+
     const data = callbackQuery.data
+    const chatId = callbackQuery.from.id
+
     if (data === 'clean_context') {
         bot.sendMessage(
-            chatIdAdmin,
-            'All was cleaned',
-            startAlwaysMenu_2buttons,
+            chatId,
+            'All context was cleaned',
+            // startAlwaysMenu_2buttons,
             // inline_keyboard,
         )
     }

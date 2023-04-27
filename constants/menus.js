@@ -1,4 +1,25 @@
 //==================================
+const keyboardSubscribeButton = {
+    inline_keyboard: [
+        [
+            {
+                text: 'Subscribe',
+                url: 't.me/originalBotNewsAI',
+            },
+        ],
+    ],
+}
+//==================================
+const clear_context = {
+    inline_keyboard: [
+        [
+            {
+                text: 'Clear context',
+                callback_data: 'clear_context',
+            },
+        ],
+    ],
+}
 
 const startAlwaysMenu_2buttons = {
     reply_markup: {
@@ -55,4 +76,6 @@ module.exports = {
     startAlwaysMenu_2buttons,
     callToAdminMenu,
     inline_keyboard,
+    keyboardSubscribeButton,
+    clear_context,
 }
