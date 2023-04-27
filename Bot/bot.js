@@ -6,6 +6,10 @@ const token =
         : process.env.TELEGRAM_BOT_TOKEN_testing
 
 console.log('token :>> ', !!token)
+console.log(
+    'process.env.TELEGRAM_BOT_TOKEN :>> ',
+    process.env.TELEGRAM_BOT_TOKEN,
+)
 const bot = new TelegramBot(token, { polling: true })
 const chatIdAdmin = process.env.CHAT_ID_ADMIN
 const giveMeAnswer = require('../utils/giveMeAnswer.js')
