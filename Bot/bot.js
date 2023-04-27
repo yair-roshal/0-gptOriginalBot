@@ -197,10 +197,11 @@ bot.on('callback_query', (query) => {
         // cleaning context________
         previousMessages[chatId] = []
 
-        bot.sendMessage(
-            chatId,
-            'All your context was cleaned! You can write your new request!',
-        )
+        let textMessage =
+            language_code == 'ru'
+                ? 'Весь ваш контекст был очищен! Вы можете написать свой новый запрос!'
+                : 'All your context was cleaned! You can write your new request!'
+        bot.sendMessage(chatId, textMessage)
     }
 })
 
