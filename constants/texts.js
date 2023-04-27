@@ -26,8 +26,6 @@ A small example of what this bot can do:
 And much more! The possibilities of the bot are limited only by your imagination. Use it and share it with your friends! 👉🏻 <a href="${link_to_bot}">GPT Original Bot</a>
 
 You can communicate with the bot as with a live interlocutor by asking questions in any language. Note that sometimes the bot makes up facts and has limited knowledge about events after 2021.
-
-✉️ To get a text response, just chat your question.
  
 🔄 Tips for proper use:
 - Ask meaningful questions, write in more detail.
@@ -46,7 +44,7 @@ Our Group in Telegram : <a href="${link_to_channel}">News AI</a>
 
 💬 If you have any questions or suggestions, email admin @yair770.
 
-🔥 To start getting words, click on start below 👇🏻 or here /start
+🔥 ✉️ To get a text response, just chat your question 👇🏻👇🏻👇🏻 
 
 
 

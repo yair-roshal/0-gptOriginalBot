@@ -40,7 +40,7 @@ console.log('process.env.NODE_ENV :>> ', process.env.NODE_ENV)
 var optionHTML = {
     // reply_markup: JSON.stringify(clear_context),
     parse_mode: 'HTML',
-    // disable_web_page_preview: true,
+    disable_web_page_preview: true,
 }
 
 var optionSubscribeButton = {
@@ -61,38 +61,22 @@ bot.onText(/\/start/, async (msg) => {
 
     let link_to_channel = '@originalBotNewsAI'
 
-    // bot.getChat(link_to_channel)
-    //     .then((chat) => {
-    //         console.log(link_to_channel + '------>>>>')
-    //         console.log(chat)
-    //         // continue with bot setup
-    //     })
-    //     .catch((error) => {
-    //         console.log('error getChat:>> ')
-    //         // console.log('error originalBotNewsAI:>> ', error)
-    //         // handle error
-    //     })
-
     bot.getChatMember(link_to_channel, chatId)
         .then((chatMember) => {
             if (
-                false
-                // chatMember.status === 'member' ||
-                // chatMember.status === 'administrator' ||
-                // chatMember.status === 'creator'
+                chatMember.status === 'member' ||
+                chatMember.status === 'administrator' ||
+                chatMember.status === 'creator'
             ) {
-                bot.sendMessage(chatId, 'Welcome to the bot!')
-                // continue with bot setup
+                bot.sendMessage(chatId, textMessageHtml, optionHTML)
+                // bot.sendMessage(chatId, 'Welcome to the bot!')
             } else {
                 bot.sendMessage(
                     chatId,
-               
 
                     text_to_subscribe,
                     optionSubscribeButton,
-                    // optionHTML,
-                    
-                 )
+                )
                 // stop bot setup
             }
         })
