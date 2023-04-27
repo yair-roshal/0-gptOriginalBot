@@ -197,7 +197,10 @@ bot.on('callback_query', (query) => {
         // cleaning context________
         previousMessages[chatId] = []
 
-        bot.sendMessage(chatId, 'All your context was cleaned')
+        bot.sendMessage(
+            chatId,
+            'All your context was cleaned! You can write your new request!',
+        )
     }
 })
 
