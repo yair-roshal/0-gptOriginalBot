@@ -14,7 +14,7 @@ const formatDate = require('../utils/formatDate.js')
 const {
     startAlwaysMenu_2buttons,
     callToAdminMenu,
-    clear_context,
+    clean_context,
     keyboardSubscribeButton,
 } = require('../constants/menus.js')
 const {
@@ -40,7 +40,7 @@ console.log('bot started__________________________________:>> ', formattedDate)
 console.log('process.env.NODE_ENV :>> ', process.env.NODE_ENV)
 
 var optionHTML = {
-    // reply_markup: JSON.stringify(clear_context),
+    // reply_markup: JSON.stringify(clean_context),
     parse_mode: 'HTML',
     disable_web_page_preview: true,
 }
@@ -126,7 +126,7 @@ bot.on('message', async (msg) => {
             })
 
         var optionClearKeyboard = {
-            reply_markup: JSON.stringify(clear_context),
+            reply_markup: JSON.stringify(clean_context),
             // parse_mode: 'HTML',
             // disable_web_page_preview: true,
         }
@@ -180,20 +180,18 @@ bot.on('message', async (msg) => {
 // callback_query
 // //processing selections on the internal bot keyboard
 
-bot.on('callback_query', (callbackQuery) => {
+bot.on('callback_query', (query) => {
     console.log('55555_ :>>callback_query ')
-    console.log('callbackQuery ---------------:>> ', callbackQuery)
+    console.log('query ---------------:>> ', query)
 
-    const data = callbackQuery.data
-    const chatId = callbackQuery.from.id
+    const chatId = query.from.id
+    const data = query.data
 
     if (data === 'clean_context') {
-        bot.sendMessage(
-            chatId,
-            'All context was cleaned',
-            // startAlwaysMenu_2buttons,
-            // inline_keyboard,
-        )
+        // cleaning context________
+        previousMessages[chatId] = []
+
+        bot.sendMessage(chatId, 'All your context was cleaned')
     }
 })
 
@@ -229,8 +227,8 @@ bot.onText(/\/clean_context/, (msg) => {
     // bot.sendMessage(chatId, 'Context was cleaned')
 })
 
-// bot.on('callback_query', (callbackQuery) => {
-//     const data = callbackQuery.data
+// bot.on('callback_query', (query) => {
+//     const data = query.data
 //     if (data === 'button_pressed') {
 //         console.log('111111111 :>>----------- ')
 //     }

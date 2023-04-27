@@ -10,12 +10,12 @@ const keyboardSubscribeButton = {
     ],
 }
 //==================================
-const clear_context = {
+const clean_context = {
     inline_keyboard: [
         [
             {
                 text: 'Clear context',
-                callback_data: 'clear_context',
+                callback_data: 'clean_context',
             },
         ],
     ],
@@ -77,5 +77,5 @@ module.exports = {
     callToAdminMenu,
     inline_keyboard,
     keyboardSubscribeButton,
-    clear_context,
+    clean_context,
 }
