@@ -2,7 +2,7 @@ module.exports = {
     apps: [
         {
             name: 'newBot',
-            script: './bot.js',
+            script: './bot/bot.js',
             max_memory_restart: '300M',
             // Logging
             out_file: './newBot-out.log',
