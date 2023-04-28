@@ -14,7 +14,7 @@ const clean_context = {
     inline_keyboard: [
         [
             {
-                text: 'Clear context',
+                text: 'Start new dialog',
                 callback_data: 'clean_context',
             },
         ],

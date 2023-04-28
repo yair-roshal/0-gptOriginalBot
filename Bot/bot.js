@@ -92,9 +92,23 @@ bot.onText(/\/start/, async (msg) => {
             console.log('error getChatMember :>> ')
             // console.log('error :>> ', error)
         })
-
-    // bot.sendMessage(chatId, textMessageHtml, optionHTML)
 })
+
+// bot.on('callback_query', (query) => {
+//     const chatId = query.message.chat.id
+//     const data = query.data
+//     console.log('query33333 :>> ', query)
+//     if (data === 'subscribe') {
+//         bot.answerCallbackQuery(
+//             query.id,
+//             'Вы успешно подписались на наш канал!',
+//         )
+//         bot.sendMessage(
+//             chatId,
+//             'Спасибо за подписку! Остались вопросы? Обращайтесь к нам.',
+//         )
+//     }
+// })
 
 bot.onText(/\/about/, (msg) => {
     const chatId = msg.chat.id
